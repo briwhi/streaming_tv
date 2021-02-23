@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 
@@ -28,8 +28,9 @@ class TV(db.Model):
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def index():
+    tvs = TV.query.all()
+    return render_template("index.html", tvs=tvs)
 
 
 if __name__ == '__main__':
