@@ -30,7 +30,8 @@ class TV(db.Model):
 @app.route('/')
 def index():
     tvs = TV.query.all()
-    return render_template("index.html", tvs=tvs)
+    channels = Channel.query.all()
+    return render_template("index.html", tvs=tvs, channels=channels)
 
 
 if __name__ == '__main__':
