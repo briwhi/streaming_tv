@@ -25,13 +25,17 @@ class TV(db.Model):
     channels = db.relationship('Channel', secondary=relations, backref='tvs')
 
 
-
-
 @app.route('/')
 def index():
     tvs = TV.query.all()
     channels = Channel.query.all()
     return render_template("index.html", tvs=tvs, channels=channels)
+
+
+@app.route('/channels')
+def list_channels():
+    channels = Channel.query.all()
+    return render_template("channels.html", channels=channels)
 
 
 if __name__ == '__main__':

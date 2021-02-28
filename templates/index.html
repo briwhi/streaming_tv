@@ -1,24 +1,26 @@
 {%  extends 'base.html' %} }}
 
 {%  block content %}
-    {%  for tv in tvs %}
-        <div>
-            {{ tv.name }} {{ tv.monthly_price }}
-            {%  for channel in tv.channels %}
-                {{ channel.name }}
-            {% endfor %}
-        </div>
-    {%  endfor %}
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>Service</th>
+                <th>Monthly</th>
+                <th>Channels</th>
+            </tr>
+            {%  for tv in tvs %}
+                <tr>
+                    <td>{{ tv.name }}</td>
+                    <td>{{ tv.monthly_price }}</td>
+                    <td>
+                        {%  for channel in tv.channels %}
+                            {{ channel.name }} &nbsp;
+                        {% endfor %}
+                    </td>
+                </tr>
+            {%  endfor %}
+        </table>
 
-    <div>
-        {%  for channel in channels %}
-            <div>{{ channel.name }}
-                {%  for tv in channel.tvs %}
-                    {{ tv.name }}
-                {% endfor %}
-            </div>
 
-        {% endfor %}
     </div>
-
 {%  endblock %}
