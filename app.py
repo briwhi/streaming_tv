@@ -38,5 +38,15 @@ def channels():
     return render_template("channels.html", channels=channels)
 
 
+@app.route('/service/add')
+def add_service():
+    return render_template("edit_service.html")
+
+
+@app.route('/channel/add')
+def add_channel():
+    return render_template("edit_channel.html")
+
+
 if __name__ == '__main__':
     app.run()
