@@ -2,6 +2,17 @@
 
 {%  block content %}
     <div class="container-fluid">
-        Edit Service
+        <div class="col text-left login mx-auto mt-5">
+            <form method="POST" class="bg-light">
+                {{ form.csrf_token }}
+                <div class="m-3">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control") }}
+                </div>
+                <div class="m-3">
+                    {{  form.submit() }}
+                </div>
+            </form>
+        </div>
     </div>
-{%  endblock %}
+{% endblock %}

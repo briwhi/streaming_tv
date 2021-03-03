@@ -1,10 +1,12 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
+from forms import ChannelForm, TVForm
 
 app = Flask(__name__)
+app.secret_key = "Secret Key"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tv.db'
-app.config['SQLAlCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 relations = db.Table('relations',
@@ -40,12 +42,14 @@ def channels():
 
 @app.route('/service/add')
 def add_service():
-    return render_template("edit_service.html")
+    form = TVForm()
+    return render_template("edit_service.html", form=form)
 
 
 @app.route('/channel/add')
 def add_channel():
-    return render_template("edit_channel.html")
+    form = ChannelForm()
+    return render_template("edit_channel.html", form=form)
 
 
 if __name__ == '__main__':
