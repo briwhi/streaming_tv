@@ -4,12 +4,14 @@
     <div class="container-fluid">
         <table class="table">
             <tr>
+                <th> </th>
                 <th>Service</th>
                 <th>Monthly</th>
                 <th>Channels</th>
             </tr>
             {%  for tv in tvs %}
                 <tr>
+                    <td> <input type="checkbox"> </td>
                     <td>{{ tv.name }}</td>
                     <td>{{ tv.monthly_price }}</td>
                     <td>

@@ -33,7 +33,7 @@ def index():
 
 
 @app.route('/channels')
-def list_channels():
+def channels():
     channels = Channel.query.all()
     return render_template("channels.html", channels=channels)
 
