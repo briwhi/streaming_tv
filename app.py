@@ -18,13 +18,13 @@ relations = db.Table('relations',
 
 class Channel(db.Model):
     channel_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
+    name = db.Column(db.String(50), unique=True)
 
 
 class TV(db.Model):
     tv_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
-    monthly_price = db.Column(db.Integer)
+    monthly_price = db.Column(db.Float)
     channels = db.relationship('Channel', secondary=relations, backref='tvs')
 
 
@@ -43,14 +43,19 @@ def channels():
 
 @app.route('/service/add')
 def add_service():
-    form = TVForm()
+    tv = TV()
+    form = TVForm(obj=tv)
+    if form.validate_on_submit():
+        form.populate_obj(tv)
+        db.session.add(tv)
+        db.session.commit()
     return render_template("edit_service.html", form=form)
 
 
 @app.route('/channel/add', methods=['GET', 'POST'])
 def add_channel():
     channel = Channel()
-    form = ChannelForm(obj=Channel)
+    form = ChannelForm(obj=channel)
     if form.validate_on_submit():
         form.populate_obj(channel)
         db.session.add(channel)
