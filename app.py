@@ -19,6 +19,7 @@ relations = db.Table('relations',
 class Channel(db.Model):
     channel_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
+    short_name = db.Column(db.String(10), unique=True)
 
 
 class TV(db.Model):
@@ -41,7 +42,7 @@ def channels():
     return render_template("channels.html", channels=channels)
 
 
-@app.route('/service/add')
+@app.route('/service/add', methods=['GET', 'POST'])
 def add_service():
     tv = TV()
     form = TVForm(obj=tv)
@@ -49,7 +50,9 @@ def add_service():
         form.populate_obj(tv)
         db.session.add(tv)
         db.session.commit()
+        return redirect(url_for('index'))
     return render_template("edit_service.html", form=form)
+    
 
 
 @app.route('/channel/add', methods=['GET', 'POST'])

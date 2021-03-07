@@ -9,7 +9,7 @@
             </tr>
             {%  for channel in channels %}
                 <tr>
-                    <td>{{ channel.name }}</td>
+                    <td>{{ channel.short_name }} - {{ channel.name }}</td>
                     <td>
                         {%  for tv in channel.tvs %}
                             {{ tv.name }} &nbsp;

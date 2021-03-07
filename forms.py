@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField, DecimalField
 
 class ChannelForm(FlaskForm):
     name = StringField(label="Name")
+    short_name = StringField(label="Abbreviation")
     submit = SubmitField(label="Submit")
     
     
