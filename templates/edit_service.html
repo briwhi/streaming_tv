@@ -4,18 +4,21 @@
     <div class="container-fluid">
         <div class="col text-left login mx-auto mt-5">
             <form method="POST" class="bg-light">
-                {{ form.csrf_token }}
-                <div class="m-3">
-                    {{ form.name.label(class="form-label") }}
-                    {{ form.name(class="form-control") }}
-                </div>
-                <div class="m-3">
-                    {{ form.monthly_price.label(class="form-label") }}
-                    {{ form.monthly_price(class="form-control") }}
-                </div>
-                <div class="m-3">
-                    {{  form.submit() }}
-                </div>
+                <fieldset>
+                    <legend>Streaming Service</legend>
+                    {{ form.csrf_token }}
+                    <div class="m-3">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control") }}
+                    </div>
+                    <div class="m-3">
+                        {{ form.monthly_price.label(class="form-label") }}
+                        {{ form.monthly_price(class="form-control") }}
+                    </div>
+                    <div class="m-3">
+                        {{  form.submit() }}
+                    </div>
+                </fieldset>
             </form>
         </div>
     </div>
