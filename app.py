@@ -45,13 +45,14 @@ def channels():
 @app.route('/service/add', methods=['GET', 'POST'])
 def add_service():
     tv = TV()
+    channels = Channel.query.all()
     form = TVForm(obj=tv)
     if form.validate_on_submit():
         form.populate_obj(tv)
         db.session.add(tv)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template("edit_service.html", form=form)
+    return render_template("edit_service.html", form=form, channels=channels)
     
 
 

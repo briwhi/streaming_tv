@@ -16,6 +16,16 @@
                         {{ form.monthly_price(class="form-control") }}
                     </div>
                     <div class="m-3">
+                        <ul>
+                            {% for channel in channels %}
+                                <li>
+                                    <input type="checkbox" name="channel{{ channel.channel_id }}" >
+                                    {{ channel.short_name }} - {{ channel.name }}
+                                </li>
+                            {%  endfor %}
+                        </ul>
+                    </div>
+                    <div class="m-3">
                         {{  form.submit() }}
                     </div>
                 </fieldset>
