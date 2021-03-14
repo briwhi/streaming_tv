@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from forms import ChannelForm, TVForm
@@ -43,9 +43,9 @@ def channels():
 
 
 @app.route('/service/add', methods=['GET', 'POST'])
-def add_service():
+def service_add():
     tv = TV()
-    channels = Channel.query.all()
+    channels = Channel.query.order_by(Channel.name).all()
     form = TVForm(obj=tv)
     if form.validate_on_submit():
         form.populate_obj(tv)
@@ -53,11 +53,27 @@ def add_service():
         db.session.commit()
         return redirect(url_for('index'))
     return render_template("edit_service.html", form=form, channels=channels)
-    
+
+
+@app.route('/service/edit/<tv_id>', methods=['GET', 'POST'])
+def service_edit(tv_id):
+    tv = TV.query.get(tv_id)
+    channels = Channel.query.order_by(Channel.name).all()
+    form = TVForm(obj=tv)
+    if form.validate_on_submit():
+        form.populate_obj(tv)
+        for channel in channels:
+            if channel.short_name in request.form:
+                add_channel_to_service(tv, channel)
+            else:
+                remove_channel_from_service(tv, channel)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template("edit_service.html", form=form, tv = tv, channels=channels)
 
 
 @app.route('/channel/add', methods=['GET', 'POST'])
-def add_channel():
+def channel_add():
     channel = Channel()
     form = ChannelForm(obj=channel)
     if form.validate_on_submit():
@@ -67,6 +83,22 @@ def add_channel():
         return redirect(url_for('channels'))
     return render_template("edit_channel.html", form=form)
 
+
+
+
+def add_channel_to_service(tv, channel):
+    if channel in tv.channels:
+        return
+    else:
+        tv.channels.append(channel)
+
+
+
+def remove_channel_from_service(tv, channel):
+    if channel in tv.channels:
+        tv.channels.remove(channel)
+    else:
+        return
 
 if __name__ == '__main__':
     app.run()

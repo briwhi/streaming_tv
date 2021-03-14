@@ -16,11 +16,12 @@
                         {{ form.monthly_price(class="form-control") }}
                     </div>
                     <div class="m-3">
-                        <ul>
+                        <ul class="list-unstyled">
                             {% for channel in channels %}
                                 <li>
-                                    <input type="checkbox" name="channel{{ channel.channel_id }}" >
-                                    {{ channel.short_name }} - {{ channel.name }}
+                                    <input type="checkbox" name="{{ channel.short_name }}"
+                                        {% if channel in tv.channels %} checked="checked"{%  endif %}>
+                                    {{ channel.name }} - {{ channel.short_name }}
                                 </li>
                             {%  endfor %}
                         </ul>
