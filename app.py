@@ -84,6 +84,14 @@ def channel_add():
     return render_template("edit_channel.html", form=form)
 
 
+@app.route('/channel/edit/<channel_id>', methods=['GET', 'POST'])
+def channel_edit(channel_id):
+    channel = Channel.query.get(channel_id)
+    form = ChannelForm(obj=channel)
+    
+    return render_template("edit_channel.html", form=form, channel=channel)
+
+
 
 
 def add_channel_to_service(tv, channel):

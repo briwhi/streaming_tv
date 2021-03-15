@@ -9,7 +9,8 @@
             </tr>
             {%  for channel in channels %}
                 <tr>
-                    <td>{{ channel.short_name }} - {{ channel.name }}</td>
+                    <td><a href="{{ url_for('channel_edit', channel_id = channel.channel_id) }}">
+                        {{ channel.short_name }} - {{ channel.name }}</a></td>
                     <td>
                         {%  for tv in channel.tvs %}
                             {{ tv.name }} &nbsp;
