@@ -11,7 +11,10 @@
             </tr>
             {%  for tv in tvs %}
                 <tr>
-                    <td> <input type="checkbox"> </td>
+                    <td> <input type="checkbox"
+                                onclick="updateTotal();"
+                                name="checkbox"
+                                id="{{ tv.tv_id }}"> </td>
                     <td><a href="{{ url_for('service_edit', tv_id=tv.tv_id) }}">{{ tv.name }}</a></td>
                     <td>{{ tv.monthly_price }}</td>
                     <td>
@@ -22,8 +25,10 @@
                 </tr>
             {%  endfor %}
         </table>
-        <a href="{{ url_for('service_add') }} ">Add Service</a>
 
+        <div class="border border-solid">
+            <div class="text-center">Total: </div>
+        </div>
 
     </div>
 {%  endblock %}
