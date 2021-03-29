@@ -14,4 +14,5 @@ class TVForm(FlaskForm):
     submit = SubmitField(label="Submit")
     
     
-    
+class IndexForm(FlaskForm):
+    submit = SubmitField(label="Update")

@@ -1,13 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
-from forms import ChannelForm, TVForm
+from forms import ChannelForm, TVForm, IndexForm
 
 app = Flask(__name__)
 
 app.secret_key = "Secret Key"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tv.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
 relations = db.Table('relations',
@@ -29,11 +30,17 @@ class TV(db.Model):
     channels = db.relationship('Channel', secondary=relations, backref='tvs')
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     tvs = TV.query.all()
     channels = Channel.query.all()
-    return render_template("index.html", tvs=tvs, channels=channels)
+    s_channels = []
+    form = IndexForm()
+    if form.validate_on_submit():
+        print("valid")
+    else:
+        print("invalid")
+    return render_template("index.html", tvs=tvs, channels=channels, s_channels=s_channels, form=form)
 
 
 @app.route('/channels')
@@ -94,6 +101,8 @@ def channel_edit(channel_id):
 
 
 
+
+
 def add_channel_to_service(tv, channel):
     if channel in tv.channels:
         return
@@ -107,6 +116,9 @@ def remove_channel_from_service(tv, channel):
         tv.channels.remove(channel)
     else:
         return
+
+
+
 
 if __name__ == '__main__':
     app.run()
